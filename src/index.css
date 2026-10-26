@@ -1,10 +1,17 @@
 @import "tailwindcss";
 
+:root {
+  --theme-brown: #3b2816;
+  --theme-orange: #f39c12;
+  --theme-navy: #1a3c6d;
+  --theme-bg: #f9f9f9;
+}
+
 @theme {
-  --color-brand-brown: #3b2816;
-  --color-brand-orange: #f39c12;
-  --color-brand-navy: #1a3c6d;
-  --color-brand-bg: #f9f9f9;
+  --color-brand-brown: var(--theme-brown);
+  --color-brand-orange: var(--theme-orange);
+  --color-brand-navy: var(--theme-navy);
+  --color-brand-bg: var(--theme-bg);
 
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
 }

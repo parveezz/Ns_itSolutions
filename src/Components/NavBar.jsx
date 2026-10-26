@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FaServer, FaBars, FaTimes } from "react-icons/fa";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Navbar({ onOpenQuote }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -25,12 +26,16 @@ export default function Navbar({ onOpenQuote }) {
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-6 text-sm font-semibold text-brand-navy">
+        <nav className="hidden lg:flex items-center gap-5 text-sm font-semibold text-brand-navy">
           <a href="#about" className="hover:text-brand-orange transition-colors">About</a>
           <a href="#cables" className="hover:text-brand-orange transition-colors">Cables</a>
           <a href="#software" className="hover:text-brand-orange transition-colors">Software</a>
           <a href="#simulator" className="hover:text-brand-orange transition-colors">Demo</a>
           <a href="#download" className="hover:text-brand-orange transition-colors">Downloads</a>
+
+          {/* Theme Palette Switcher */}
+          <ThemeToggle />
+
           <button
             type="button"
             onClick={onOpenQuote}
@@ -40,8 +45,10 @@ export default function Navbar({ onOpenQuote }) {
           </button>
         </nav>
 
-        {/* Mobile Menu Button */}
+        {/* Mobile Menu Actions */}
         <div className="flex items-center gap-2 lg:hidden">
+          <ThemeToggle />
+
           <button
             type="button"
             onClick={onOpenQuote}
@@ -49,6 +56,7 @@ export default function Navbar({ onOpenQuote }) {
           >
             Quote
           </button>
+
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
