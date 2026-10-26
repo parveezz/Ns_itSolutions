@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-brown: #3b2816;
+  --color-brand-orange: #f39c12;
+  --color-brand-navy: #1a3c6d;
+  --color-brand-bg: #f9f9f9;
+
+  --font-serif: "Times New Roman", Times, serif;
+  --font-sans: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
