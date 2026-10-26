@@ -1,86 +1,81 @@
 export const stats = [
-  { label: "Offices & Businesses Served", value: "500+" },
-  { label: "Computers & Laptops Serviced", value: "10,000+" },
-  { label: "Hardware Assets Tagged", value: "25,000+" },
-  { label: "Customer Satisfaction", value: "99%" },
+  { label: "Cables Deployed", value: "250K+ m" },
+  { label: "Cables Monitored", value: "15,000+" },
+  { label: "Offices Wired", value: "350+" },
+  { label: "Signal Reliability", value: "99.9%" },
 ];
 
-export const services = [
+export const hardwareProducts = [
   {
     id: 1,
-    title: "Software Installation",
-    description: "Installation of Windows, MS Office, Antivirus, and custom software for all your office computers.",
-    icon: "💻",
-    features: ["Windows & OS Setup", "Antivirus & Security", "Bulk Computer Setup"]
+    title: "Cat6A Shielded Network Cable",
+    type: "Copper Cable",
+    spec: "10 Gbps • Pure Copper",
+    description: "Commercial-grade shielded LAN cable for offices and server racks.",
+    softwareBonus: "Includes NS Speed Monitor"
   },
   {
     id: 2,
-    title: "Asset Tagging & Labelling",
-    description: "Put barcode stickers on laptops, PCs, and office equipment to easily track and manage inventory.",
-    icon: "🏷️",
-    features: ["Barcode Stickers", "Asset Inventory List", "Loss Prevention"]
+    title: "Fiber Optic Patch Cord",
+    type: "Optical Cable",
+    spec: "Single/Multi-Mode • Ultra-Low Loss",
+    description: "High-speed armored fiber lines for high-throughput connectivity.",
+    softwareBonus: "Includes Signal Loss Alert"
   },
   {
     id: 3,
-    title: "Hardware Repairs & Upgrades",
-    description: "Fast repairs for slow PCs, RAM and SSD upgrades, screen replacements, and routine PC cleaning.",
-    icon: "🛠️",
-    features: ["Speed Up Slow PCs", "RAM & SSD Upgrades", "Annual Maintenance (AMC)"]
+    title: "Barcode-Tagged Patch Cable",
+    type: "Smart Hardware",
+    spec: "Pre-labeled QR / Barcode",
+    description: "Network patch cords that sync directly with asset tracking software.",
+    softwareBonus: "Instant Barcode Scan"
+  }
+];
+
+export const softwareSolutions = [
+  {
+    id: 1,
+    title: "Cable Speed & Health Tester",
+    icon: "💻",
+    description: "Software that tests throughput (10Gbps) and alerts when a cable is damaged.",
+    features: ["Real-time Speed Measurement", "Cable Fault Detection"]
   },
   {
-    id: 4,
-    title: "Office WiFi & Networking",
-    description: "Fast and reliable office WiFi setup, LAN cables, router configuration, and internet troubleshooting.",
+    id: 2,
+    title: "Rack & Port Mapping Tool",
     icon: "🌐",
-    features: ["Office WiFi Setup", "LAN Cabling", "Printer & Network Sharing"]
+    description: "Interactive visual map showing which cable connects each port to each desk.",
+    features: ["Visual 2D Rack View", "Floor Plan Routing"]
+  },
+  {
+    id: 3,
+    title: "Cable Barcode Scanner",
+    icon: "🏷️",
+    description: "Scan cable barcodes to view installation date, length, and warranty instantly.",
+    features: ["QR / Barcode Scanning", "Asset Inventory Sync"]
   }
 ];
 
 export const downloads = [
   {
     id: 1,
-    title: "NS IT Asset Tracker App",
+    title: "NS Cable Speed Tester",
     type: "exe",
-    version: "v2.0",
-    size: "15 MB",
-    description: "Simple desktop app to track laptops, desktops, and serial numbers in your office.",
+    version: "v3.1",
+    size: "18 MB",
+    description: "Test throughput and signal latency on any Cat6/Cat7 cable connected to your PC.",
     link: "#download"
   },
   {
     id: 2,
-    title: "Barcode Scanner Driver",
-    type: "zip",
-    version: "v1.5",
-    size: "25 MB",
-    description: "Plug-and-play drivers for all standard USB barcode and QR scanners.",
-    link: "#download"
-  },
-  {
-    id: 3,
-    title: "Office Computer Setup Guide",
+    title: "Cable & Hardware Catalog",
     type: "pdf",
     version: "2024",
-    size: "4 MB",
-    description: "Easy step-by-step PDF guide to setup new computers and office printers.",
+    size: "5 MB",
+    description: "Full product specifications, wire gauge charts, and wholesale pricing.",
     link: "#download"
   }
 ];
 
-export const jobOpenings = [
-  {
-    id: 1,
-    role: "Computer Hardware Technician",
-    type: "Full-Time",
-    location: "Hyderabad",
-    experience: "1+ Years",
-    description: "Assemble PCs, fix hardware issues, install Windows, and upgrade SSDs/RAM."
-  },
-  {
-    id: 2,
-    role: "Network & WiFi Assistant",
-    type: "Full-Time",
-    location: "Hyderabad",
-    experience: "Fresher / 1 Year",
-    description: "Help connect office LAN cables, setup routers, and test internet connections."
-  }
-];
+export const services = softwareSolutions;
+export const jobOpenings = [];

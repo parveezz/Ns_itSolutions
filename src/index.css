@@ -6,10 +6,14 @@
   --color-brand-navy: #1a3c6d;
   --color-brand-bg: #f9f9f9;
 
-  --font-serif: "Times New Roman", Times, serif;
-  --font-sans: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
 }
 
 html {
   scroll-behavior: smooth;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+body {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
 }
