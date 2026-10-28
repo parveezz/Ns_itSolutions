@@ -34,7 +34,7 @@ export default function Navbar() {
     <header className="relative z-30 w-full">
       <div className="mx-auto flex max-w-[1520px] items-center justify-between px-6 pt-8 pb-4 sm:px-10 lg:px-16">
         <a
-          href="#"
+          href="/"
           className="select-none text-xl font-bold uppercase tracking-[0.2em] text-white transition-opacity hover:opacity-90 sm:text-2xl"
         >
           YOUR COMPANY
@@ -62,7 +62,7 @@ export default function Navbar() {
                 </button>
               ) : (
                 <a
-                  href={`#${link.label.toLowerCase().replace(/\s+/g, "-")}`}
+                  href={link.label === "Contact Us" ? "/contact" : `/#${link.label.toLowerCase().replace(/\s+/g, "-")}`}
                   className="block py-2 text-sm tracking-wide text-white/90 transition-colors hover:text-white xl:text-[15px]"
                 >
                   {link.label}
@@ -145,7 +145,7 @@ export default function Navbar() {
                   </>
                 ) : (
                   <a
-                    href={`#${link.label.toLowerCase().replace(/\s+/g, "-")}`}
+                    href={link.label === "Contact Us" ? "/contact" : `/#${link.label.toLowerCase().replace(/\s+/g, "-")}`}
                     onClick={() => setMobileMenuOpen(false)}
                     className="block py-3 text-base text-white/90 hover:text-white"
                   >
