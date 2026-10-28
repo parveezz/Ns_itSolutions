@@ -1,4 +1,4 @@
-import ContactCTA from "../../components/ContactCTA";
+import ContactCTA from "../../Components/ContactCTA";
 import AboutHero from "./AboutHero";
 import AboutUs from "./AboutUs";
 import CoreValues from "./CoreValues";
