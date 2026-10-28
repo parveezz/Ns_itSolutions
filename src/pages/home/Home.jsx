@@ -1,5 +1,5 @@
 import Hero from "../../Components/Hero";
-import AboutUs from "../../Components/AboutUs";
+import AboutUs from "../About/AboutUs";
 import Industries from "../../Components/Industries";
 import Insights from "../../Components/Insights";
 import Contact from "../contact/Contact";

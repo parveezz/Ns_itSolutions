@@ -54,8 +54,6 @@ export default function ContactUs() {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        // Frontend only: no API call or data submission.
-        // Connect your backend here when ready.
     };
 
     return (
@@ -76,7 +74,7 @@ export default function ContactUs() {
             />
 
             {/* Centered heading */}
-            <div className="relative z-10 mx-auto w-full max-w-[900px] px-6 pt-40 pb-10 text-center sm:px-10 sm:pt-20 sm:pb-12 lg:pt-24">
+            <div className="relative z-10 mx-auto w-full max-w-[900px] px-6 pt-6 pb-16 text-center sm:px-10 sm:pt-8 sm:pb-20 lg:pt-10 lg:pb-24">
                 <span className="mb-4 block text-xs font-medium uppercase tracking-[0.25em] text-cyan-400 sm:text-sm">
                     Get In Touch
                 </span>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowRight, MapPin, ShieldCheck, Zap } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 const usHubs = [
   { id: "sf", name: "San Francisco, CA", role: "Silicon Valley Tech HQ", x: 86, y: 275, ping: true },

@@ -1,15 +1,18 @@
+import { useState } from "react";
 import {
     ArrowRight,
     Mail,
     Phone,
     MapPin,
     Globe,
+    CheckCircle2,
 } from "lucide-react";
 import {
     FaLinkedinIn as Linkedin,
     FaInstagram as Instagram,
     FaGithub as Github,
 } from "react-icons/fa";
+import Input from "./Input";
 
 const footerLinks = {
     Explore: [
@@ -52,6 +55,17 @@ const socialLinks = [
 
 export default function Footer() {
     const currentYear = new Date().getFullYear();
+    const [newsletterEmail, setNewsletterEmail] = useState("");
+    const [isSubscribed, setIsSubscribed] = useState(false);
+
+    const handleNewsletterSubmit = (e) => {
+        e.preventDefault();
+        if (newsletterEmail) {
+            setIsSubscribed(true);
+            setNewsletterEmail("");
+            setTimeout(() => setIsSubscribed(false), 5000);
+        }
+    };
 
     return (
         <footer className="relative isolate overflow-hidden bg-black text-white">
@@ -62,6 +76,56 @@ export default function Footer() {
             />
 
             <div className="mx-auto max-w-[1520px] px-6 sm:px-10 lg:px-16">
+                {/* ─── Newsletter Section ─── */}
+                <div className="border-b border-white/10 py-12 sm:py-14 lg:py-16">
+                    <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-12">
+                        <div className="lg:col-span-6 xl:col-span-7">
+                            <span className="text-xs font-medium uppercase tracking-[0.2em] text-cyan-400">
+                                Newsletter
+                            </span>
+                            <h3 className="mt-2 text-2xl font-light tracking-tight text-white sm:text-3xl lg:text-4xl">
+                                Stay connected with our latest insights.
+                            </h3>
+                            <p className="mt-2 text-sm text-white/60 font-light max-w-xl">
+                                Subscribe to receive our curated updates on emerging technologies, enterprise software trends, and innovation.
+                            </p>
+                        </div>
+
+                        <div className="lg:col-span-6 xl:col-span-5">
+                            <form
+                                onSubmit={handleNewsletterSubmit}
+                                className="flex flex-col gap-3 sm:flex-row sm:items-start"
+                            >
+                                <div className="flex-1">
+                                    <Input
+                                        type="email"
+                                        id="newsletterEmail"
+                                        name="newsletterEmail"
+                                        required
+                                        placeholder="Enter your email address"
+                                        value={newsletterEmail}
+                                        onChange={(e) => setNewsletterEmail(e.target.value)}
+                                    />
+                                </div>
+                                <button
+                                    type="submit"
+                                    className="inline-flex h-[48px] sm:h-[52px] shrink-0 cursor-pointer items-center justify-center gap-2 rounded-lg bg-[#0d9488] px-7 text-xs font-medium tracking-wide text-white transition-colors duration-300 hover:bg-[#0f766e] focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-offset-2 focus:ring-offset-black sm:text-sm"
+                                >
+                                    <span>Subscribe</span>
+                                    <ArrowRight size={15} />
+                                </button>
+                            </form>
+
+                            {isSubscribed && (
+                                <div className="mt-3 flex items-center gap-2 text-xs text-cyan-400 animate-in fade-in duration-200">
+                                    <CheckCircle2 size={14} />
+                                    <span>Thank you for subscribing! We'll keep you updated.</span>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+
                 {/* Main footer content */}
                 <div className="grid grid-cols-1 gap-12 border-b border-white/10 py-14 sm:py-16 lg:grid-cols-12 lg:gap-10 lg:py-20">
                     {/* Brand and description */}

@@ -57,7 +57,7 @@ export default function Hero() {
 
   return (
     <section
-      className="relative w-full min-h-screen lg:h-screen flex flex-col justify-between overflow-hidden bg-white"
+      className="relative w-full min-h-screen lg:h-screen flex flex-col justify-between overflow-hidden bg-black"
 
       aria-label="Hero slider section"
     >
