@@ -6,7 +6,9 @@ import {
     Mail,
     Phone,
 } from "lucide-react";
-import { Input, Select, Textarea } from "../../shared";
+import Input from "../../shared/Input";
+import Select from "../../shared/Select";
+import Textarea from "../../shared/Textarea";
 
 const initialFormData = {
     fullName: "",
