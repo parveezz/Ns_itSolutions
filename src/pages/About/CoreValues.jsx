@@ -7,6 +7,8 @@ import {
   ShieldCheck,
   Users,
   Leaf,
+  ArrowLeft,
+  ArrowRight,
   ArrowUpRight,
 } from "lucide-react";
 
@@ -43,8 +45,34 @@ const coreValues = [
 
 export default function CoreValues() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [slideDirection, setSlideDirection] = useState("right");
+
   const activeValue = coreValues[activeIndex];
   const ActiveIcon = activeValue.icon;
+
+  const changeValue = (direction) => {
+    setSlideDirection(direction);
+
+    setActiveIndex((current) =>
+      direction === "right"
+        ? (current + 1) % coreValues.length
+        : (current - 1 + coreValues.length) % coreValues.length
+    );
+  };
+
+  const selectValue = (index) => {
+    if (index === activeIndex) return;
+
+    setSlideDirection(index > activeIndex ? "right" : "left");
+    setActiveIndex(index);
+  };
+
+  const positions = [
+    "left-1/2 top-[4%] -translate-x-1/2",
+    "right-[2%] top-1/2 -translate-y-1/2",
+    "left-1/2 bottom-[4%] -translate-x-1/2",
+    "left-[2%] top-1/2 -translate-y-1/2",
+  ];
 
   return (
     <section
@@ -52,6 +80,46 @@ export default function CoreValues() {
       aria-labelledby="core-values-heading"
       className="relative isolate w-full overflow-hidden bg-black py-10 text-white sm:py-14 lg:py-16"
     >
+      {/* Directional content animations */}
+      <style>{`
+        @keyframes coreValueSlideFromRight {
+          from {
+            opacity: 0;
+            transform: translateX(35px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
+        @keyframes coreValueSlideFromLeft {
+          from {
+            opacity: 0;
+            transform: translateX(-35px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
+        .core-value-slide-right {
+          animation: coreValueSlideFromRight 400ms ease-out both;
+        }
+
+        .core-value-slide-left {
+          animation: coreValueSlideFromLeft 400ms ease-out both;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .core-value-slide-right,
+          .core-value-slide-left {
+            animation: none;
+          }
+        }
+      `}</style>
+
       {/* Background glow */}
       <div
         aria-hidden="true"
@@ -105,9 +173,11 @@ export default function CoreValues() {
                   <span className="block text-[10px] uppercase tracking-[0.35em] text-white/30">
                     Our
                   </span>
+
                   <span className="mt-1 block text-xl font-light tracking-wide text-white/70 sm:text-2xl">
                     Principles
                   </span>
+
                   <span className="mx-auto mt-3 block h-0.5 w-8 rounded-full bg-cyan-400/60" />
                 </div>
               </div>
@@ -117,21 +187,14 @@ export default function CoreValues() {
                 const Icon = value.icon;
                 const isActive = index === activeIndex;
 
-                const positions = [
-                  "left-1/2 top-[4%] -translate-x-1/2",
-                  "right-[2%] top-1/2 -translate-y-1/2",
-                  "left-1/2 bottom-[4%] -translate-x-1/2",
-                  "left-[2%] top-1/2 -translate-y-1/2",
-                ];
-
                 return (
                   <button
                     key={value.id}
                     type="button"
-                    onClick={() => setActiveIndex(index)}
+                    onClick={() => selectValue(index)}
                     aria-pressed={isActive}
                     aria-label={`Show ${value.title}`}
-                    className={`group absolute z-10 flex w-[100px] -translate-y-0 flex-col items-center gap-2 rounded-xl p-2 text-center transition-all duration-300 sm:w-[120px] sm:p-3 ${positions[index]}`}
+                    className={`group absolute z-10 flex w-[100px] flex-col items-center gap-2 rounded-xl p-2 text-center transition-all duration-300 sm:w-[120px] sm:p-3 ${positions[index]}`}
                   >
                     <span
                       className={`flex h-16 w-16 items-center justify-center rounded-full border transition-all duration-300 sm:h-20 sm:w-20 ${isActive
@@ -166,7 +229,11 @@ export default function CoreValues() {
           <div className="min-w-0 lg:col-span-7">
             <article
               key={activeValue.id}
-              className="relative flex min-h-[320px] flex-col overflow-hidden rounded-2xl border border-slate-700/70 bg-gradient-to-br from-[#111419] via-[#0c0e12] to-[#080a0d] p-5 transition-colors duration-300 sm:p-8 lg:min-h-[390px] lg:p-10"
+              aria-live="polite"
+              className={`relative flex min-h-[320px] flex-col overflow-hidden rounded-2xl border border-slate-700/70 bg-gradient-to-br from-[#111419] via-[#0c0e12] to-[#080a0d] p-5 transition-colors duration-300 sm:p-8 lg:min-h-[390px] lg:p-10 ${slideDirection === "right"
+                  ? "core-value-slide-right"
+                  : "core-value-slide-left"
+                }`}
             >
               {/* Subtle decorative glow */}
               <div
@@ -192,10 +259,7 @@ export default function CoreValues() {
               </div>
 
               {/* Selected value content */}
-              <div
-                key={activeValue.id}
-                className="relative mt-7 flex-1 animate-in fade-in slide-in-from-bottom-2 duration-300 sm:mt-9"
-              >
+              <div className="relative mt-7 flex-1 sm:mt-9">
                 <h3 className="text-3xl font-light tracking-tight text-white sm:text-4xl lg:text-5xl">
                   {activeValue.title}
                 </h3>
@@ -207,19 +271,41 @@ export default function CoreValues() {
                 </p>
               </div>
 
-              {/* Bottom accent */}
-              <div className="relative mt-8 flex items-center justify-between gap-4 border-t border-white/[0.08] pt-5">
+              {/* Bottom accent and arrow navigation */}
+              <div className="relative mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-white/[0.08] pt-5">
                 <div className="flex items-center gap-3">
                   <span className="h-1 w-7 rounded-full bg-cyan-400 sm:w-9" />
+
                   <span className="text-[9px] font-medium uppercase tracking-[0.25em] text-slate-500 sm:text-[10px]">
                     Our Standard
                   </span>
                 </div>
 
-                <span className="flex items-center gap-1 text-[10px] text-slate-500 sm:text-xs">
-                  {String(activeIndex + 1).padStart(2, "0")} / 04
-                  <ArrowUpRight className="h-3.5 w-3.5" />
-                </span>
+                <div className="flex items-center gap-3">
+                  <span className="flex items-center gap-1 font-mono text-xs text-slate-400 sm:text-sm">
+                    {String(activeIndex + 1).padStart(2, "0")}
+                    <span className="text-slate-600">/</span>
+                    {String(coreValues.length).padStart(2, "0")}
+                  </span>
+
+                  <button
+                    type="button"
+                    onClick={() => changeValue("left")}
+                    aria-label="Previous core value"
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-slate-300 transition-all duration-300 hover:border-cyan-400 hover:bg-cyan-400/10 hover:text-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                  >
+                    <ArrowLeft className="h-4 w-4" />
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => changeValue("right")}
+                    aria-label="Next core value"
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-slate-300 transition-all duration-300 hover:border-cyan-400 hover:bg-cyan-400/10 hover:text-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                  >
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
+                </div>
               </div>
             </article>
 
@@ -229,7 +315,7 @@ export default function CoreValues() {
                 <button
                   key={value.id}
                   type="button"
-                  onClick={() => setActiveIndex(index)}
+                  onClick={() => selectValue(index)}
                   aria-label={`Select ${value.title}`}
                   aria-pressed={activeIndex === index}
                   className={`h-1 rounded-full transition-all duration-300 ${activeIndex === index

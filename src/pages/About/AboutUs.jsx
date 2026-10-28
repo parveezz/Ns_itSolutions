@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const usHubs = [
   { id: "sf", name: "San Francisco, CA", role: "Silicon Valley Tech HQ", x: 86, y: 275, ping: true },
@@ -68,13 +69,13 @@ export default function AboutUs() {
 
             {/* Hero-matched CTA Button */}
             <div className="mb-10 sm:mb-12">
-              <a
-                href="#contact"
+              <Link
+                to="/contact"
                 className="inline-flex items-center gap-2.5 bg-[#0d9488] hover:bg-[#0f766e] text-white px-7 py-3 rounded-full text-xs sm:text-sm font-medium tracking-wide shadow-lg shadow-teal-950/40 transition-all duration-300 hover:shadow-xl hover:translate-x-1 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-offset-2 focus:ring-offset-black"
               >
                 <span>Discover Our Story</span>
                 <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-              </a>
+              </Link>
             </div>
 
             {/* Horizontal Statistics */}

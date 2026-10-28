@@ -19,20 +19,27 @@ export default function ContactCTA() {
                 <div className="absolute -bottom-[125%] right-[8%] h-[200%] w-[45%] rotate-[35deg] rounded-[50%] bg-[#222f3d]/70" />
             </div>
 
-            <div className="mx-auto flex w-full max-w-[1520px] flex-col items-center justify-between gap-5 px-5 py-10 sm:px-8 sm:py-12 md:flex-row md:gap-8 lg:px-16">
-                {/* Heading */}
-                <h2 className="text-center text-3xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-5xl md:text-left">
-                    We are here to assist you
-                </h2>
+            {/* Main row */}
+            <div className="mx-auto flex w-full max-w-[1520px] flex-col items-start justify-between gap-5 px-5 py-8 sm:px-8 md:flex-row md:items-center md:gap-8 lg:px-16">
+                {/* Left side: Label + Heading */}
+                <div className="flex flex-col gap-2">
+                    <span className="bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-xs font-semibold uppercase tracking-[0.22em] text-transparent sm:text-sm">
+                        LET&apos;S CONNECT
+                    </span>
 
-                {/* Learn More Button */}
+                    <h2 className="text-xl font-medium leading-snug tracking-tight sm:text-2xl lg:text-3xl">
+                        We are here to assist you.
+                    </h2>
+                </div>
+
+                {/* Right side: Button */}
                 <button
                     type="button"
                     onClick={() => navigate("/contact")}
-                    className="inline-flex shrink-0 items-center justify-center gap-3 rounded-full bg-gradient-to-r from-cyan-400 to-emerald-500 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:scale-[1.03] hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-cyan-300 focus:ring-offset-2 focus:ring-offset-[#10151c]"
+                    className="group inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-cyan-400 to-emerald-500 px-5 py-2.5 text-xs font-semibold text-white transition-all duration-300 hover:scale-[1.03] hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-cyan-300 focus:ring-offset-2 focus:ring-offset-[#10151c] sm:text-sm"
                 >
-                    Learn More
-                    <ArrowRight className="h-5 w-5" />
+                    Get in Touch
+                    <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </button>
             </div>
         </section>

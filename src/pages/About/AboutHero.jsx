@@ -23,20 +23,6 @@ export default function AboutHero() {
           <span className="text-xs font-medium uppercase tracking-[0.25em] text-cyan-400 sm:text-sm">
             WHO WE ARE • ABOUT US
           </span>
-
-          <nav aria-label="Breadcrumb" className="text-xs sm:text-sm">
-            <ol className="flex items-center gap-2 font-light text-white/60">
-              <li>
-                <span className="cursor-pointer transition-colors hover:text-white">
-                  Home
-                </span>
-              </li>
-              <li aria-hidden="true" className="text-white/40">
-                /
-              </li>
-              <li className="font-normal text-white">About Us</li>
-            </ol>
-          </nav>
         </div>
       </div>
 
