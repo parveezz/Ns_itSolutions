@@ -1,10 +1,10 @@
-import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import AboutUs from "./components/AboutUs";
-import Industries from "./components/Industries";
-import ContactUs from "./components/ContactUs";
-import Insights from "./components/Insights";
-import Footer from "./components/Footer";
+import Navbar from "./Components/NavBar";
+import Hero from "./Components/Hero";
+import AboutUs from "./Components/AboutUs";
+import Industries from "./Components/Industries";
+import ContactUs from "./Components/ContactUs";
+import Insights from "./Components/Insights";
+import Footer from "./Components/Footer";
 
 export default function App() {
   return (
