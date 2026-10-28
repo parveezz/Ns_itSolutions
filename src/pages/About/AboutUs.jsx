@@ -1,16 +1,111 @@
+
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
+
 import { Link } from "react-router-dom";
 
 const usHubs = [
-  { id: "sf", name: "San Francisco, CA", role: "Silicon Valley Tech HQ", x: 86, y: 275, ping: true },
-  { id: "sea", name: "Seattle, WA", role: "Cloud & Distributed Systems", x: 132, y: 98 },
-  { id: "atx", name: "Austin, TX", role: "Software Innovation Lab", x: 480, y: 465, ping: true },
-  { id: "chi", name: "Chicago, IL", role: "Midwest Operations Center", x: 585, y: 215 },
-  { id: "nyc", name: "New York, NY", role: "East Coast Enterprise Hub", x: 808, y: 200, ping: true },
-  { id: "bos", name: "Boston, MA", role: "Advanced R&D Facility", x: 842, y: 165 },
-  { id: "atl", name: "Atlanta, GA", role: "Southeast Regional Hub", x: 692, y: 388 },
-  { id: "den", name: "Denver, CO", role: "Mountain Tech Hub", x: 342, y: 260 },
+  { id: "sf", name: "San Francisco", state: "CA", role: "Silicon Valley Tech HQ", x: 86, y: 275 },
+  { id: "sea", name: "Seattle", state: "WA", role: "Cloud & Distributed Systems", x: 132, y: 98 },
+  { id: "atx", name: "Austin", state: "TX", role: "Software Innovation Lab", x: 480, y: 465 },
+  { id: "chi", name: "Chicago", state: "IL", role: "Midwest Operations Center", x: 585, y: 215 },
+  { id: "nyc", name: "New York", state: "NY", role: "East Coast Enterprise Hub", x: 808, y: 200 },
+  { id: "bos", name: "Boston", state: "MA", role: "Advanced R&D Facility", x: 842, y: 165 },
+  { id: "atl", name: "Atlanta", state: "GA", role: "Southeast Regional Hub", x: 692, y: 388 },
+  { id: "den", name: "Denver", state: "CO", role: "Mountain Tech Hub", x: 342, y: 260 },
+];
+
+const connections = [
+  ["sf", "sea"],
+  ["sf", "den"],
+  ["sf", "atx"],
+  ["sea", "chi"],
+  ["den", "chi"],
+  ["den", "atx"],
+  ["atx", "chi"],
+  ["atx", "atl"],
+  ["chi", "nyc"],
+  ["atl", "nyc"],
+  ["nyc", "bos"],
+];
+
+const states = [
+  { id: "WA", d: "M95 90 L190 100 L180 185 L85 170 Z" },
+  { id: "OR", d: "M85 175 L180 190 L165 270 L75 255 Z" },
+  { id: "CA", d: "M75 260 L165 275 L190 400 L165 430 L125 410 L95 345 Z" },
+  { id: "ID", d: "M195 105 L235 110 L240 190 L215 220 L180 190 Z" },
+  { id: "NV", d: "M170 280 L250 290 L230 390 L190 400 L165 275 Z" },
+  { id: "MT", d: "M240 110 L350 115 L345 195 L240 190 Z" },
+  { id: "WY", d: "M240 200 L340 205 L335 280 L230 275 Z" },
+  { id: "UT", d: "M230 285 L300 290 L290 365 L215 360 Z" },
+  { id: "AZ", d: "M195 365 L285 370 L280 440 L205 430 Z" },
+  { id: "ND", d: "M355 120 L455 125 L455 190 L350 190 Z" },
+  { id: "SD", d: "M350 195 L455 195 L455 260 L345 260 Z" },
+  { id: "NE", d: "M345 265 L455 265 L465 320 L340 320 Z" },
+  { id: "KS", d: "M340 325 L465 325 L465 370 L335 370 Z" },
+  { id: "OK", d: "M335 375 L465 375 L465 420 L400 420 L390 400 L335 400 Z" },
+  { id: "TX", d: "M335 405 L390 405 L400 425 L465 425 L465 470 L445 500 L420 480 L395 465 L375 480 L350 455 Z" },
+  { id: "MN", d: "M460 125 L525 130 L530 205 L460 195 Z" },
+  { id: "IA", d: "M460 265 L525 265 L525 320 L465 320 Z" },
+  { id: "MO", d: "M465 325 L530 325 L535 380 L465 375 Z" },
+  { id: "AR", d: "M470 385 L525 385 L525 430 L470 425 Z" },
+  { id: "LA", d: "M470 435 L525 435 L530 465 L490 460 Z" },
+  { id: "WI", d: "M535 150 L585 155 L585 220 L540 220 L530 195 Z" },
+  { id: "IL", d: "M540 225 L585 225 L585 300 L545 300 Z" },
+  { id: "IN", d: "M590 230 L625 230 L625 295 L590 295 Z" },
+  { id: "MI", d: "M585 150 L625 145 L645 175 L630 210 L595 215 Z" },
+  { id: "OH", d: "M630 230 L675 225 L680 285 L630 290 Z" },
+  { id: "KY", d: "M590 305 L680 295 L695 320 L625 335 L590 325 Z" },
+  { id: "TN", d: "M535 340 L625 340 L625 365 L535 365 Z" },
+  { id: "MS", d: "M540 370 L580 370 L580 425 L540 425 Z" },
+  { id: "AL", d: "M585 370 L625 370 L635 430 L590 430 Z" },
+  { id: "GA", d: "M640 365 L690 365 L700 415 L655 435 L635 410 Z" },
+  { id: "FL", d: "M650 440 L700 420 L720 470 L710 510 L695 490 L680 455 Z" },
+  { id: "PA", d: "M700 225 L760 215 L770 255 L705 265 Z" },
+  { id: "NY", d: "M765 200 L825 190 L840 215 L785 230 L765 220 Z" },
+  { id: "MA", d: "M825 190 L855 185 L860 195 L830 202 Z" },
+  { id: "VA", d: "M700 300 L780 285 L795 310 L720 325 Z" },
+  { id: "NC", d: "M700 330 L790 315 L810 340 L720 350 Z" },
+  { id: "SC", d: "M700 355 L745 350 L760 380 L720 390 Z" },
+];
+
+const stateLabels = [
+  { name: "CA", x: 135, y: 340 },
+  { name: "WA", x: 140, y: 130 },
+  { name: "OR", x: 125, y: 220 },
+  { name: "NV", x: 205, y: 325 },
+  { name: "ID", x: 210, y: 160 },
+  { name: "MT", x: 290, y: 155 },
+  { name: "WY", x: 285, y: 240 },
+  { name: "UT", x: 255, y: 325 },
+  { name: "AZ", x: 240, y: 405 },
+  { name: "ND", x: 405, y: 155 },
+  { name: "SD", x: 405, y: 230 },
+  { name: "NE", x: 400, y: 295 },
+  { name: "KS", x: 400, y: 350 },
+  { name: "OK", x: 400, y: 395 },
+  { name: "TX", x: 395, y: 445 },
+  { name: "MN", x: 495, y: 170 },
+  { name: "IA", x: 495, y: 290 },
+  { name: "MO", x: 500, y: 350 },
+  { name: "WI", x: 560, y: 185 },
+  { name: "IL", x: 560, y: 265 },
+  { name: "IN", x: 608, y: 265 },
+  { name: "MI", x: 610, y: 180 },
+  { name: "OH", x: 655, y: 255 },
+  { name: "KY", x: 640, y: 315 },
+  { name: "TN", x: 580, y: 355 },
+  { name: "AR", x: 500, y: 410 },
+  { name: "LA", x: 500, y: 450 },
+  { name: "MS", x: 560, y: 400 },
+  { name: "AL", x: 610, y: 400 },
+  { name: "GA", x: 670, y: 400 },
+  { name: "FL", x: 695, y: 465 },
+  { name: "PA", x: 735, y: 245 },
+  { name: "NY", x: 800, y: 210 },
+  { name: "VA", x: 750, y: 305 },
+  { name: "NC", x: 755, y: 335 },
+  { name: "SC", x: 730, y: 370 },
 ];
 
 export default function AboutUs() {
@@ -22,81 +117,76 @@ export default function AboutUs() {
     { value: "8+", label: "Years of Innovation" },
   ];
 
+  const hubMap = Object.fromEntries(usHubs.map((hub) => [hub.id, hub]));
+
   return (
     <section
       id="about"
-      className="relative w-full min-h-[720px] bg-black overflow-hidden flex items-center py-16 sm:py-20 lg:py-24"
       aria-label="About Us"
+      className="relative w-full overflow-hidden bg-black py-16 sm:py-20 lg:py-24"
     >
-      {/* ─── Directional Black Gradient Overlays (Matching Hero) ─── */}
       <div
-        className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/80 via-50% to-black/35 pointer-events-none z-10"
         aria-hidden="true"
-      />
-      <div
-        className="absolute inset-0 bg-gradient-to-t from-black via-black/60 via-35% to-transparent pointer-events-none z-10"
-        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-r from-black/95 via-black/80 to-black/35"
       />
 
-      {/* ─── Main Content Container ─── */}
-      <div className="relative z-20 max-w-[1520px] w-full mx-auto px-6 sm:px-10 lg:px-16">
-        <div className="grid grid-cols-1 lg:grid-cols-[60%_40%] gap-8 xl:gap-10 items-center">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-black via-black/30 to-transparent"
+      />
 
-          {/* LEFT COLUMN (5 cols on xl, 6 cols on lg): Company Information */}
+      <div className="relative z-20 mx-auto w-full max-w-[1520px] px-6 sm:px-10 lg:px-16">
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[48%_52%] xl:gap-12">
+
+          {/* LEFT SIDE */}
           <div className="min-w-0 text-left">
-            {/* Eyebrow Label */}
-            <span className="inline-block text-xs sm:text-sm font-medium text-cyan-400 tracking-[0.25em] uppercase mb-3 sm:mb-4">
+            <span className="mb-4 inline-block text-xs font-medium uppercase tracking-[0.25em] text-cyan-400 sm:text-sm">
               WHO WE ARE • AMERICAN ENTERPRISE
             </span>
 
-            {/* Main Heading — exact Hero typography: font-light, leading-[1.15], tracking-tight */}
-            <h2 className="text-3xl sm:text-4xl lg:text-[42px] xl:text-[48px] font-light text-white tracking-tight leading-[1.15] mb-5 sm:mb-6">
+            <h2 className="mb-5 text-3xl font-light leading-[1.15] tracking-tight text-white sm:text-4xl lg:text-[42px] xl:text-[48px]">
               About Our Company
             </h2>
 
-            {/* Supporting Statement — font-light text-white/90 */}
-            <p className="text-lg sm:text-xl lg:text-2xl font-light text-white/90 leading-snug tracking-tight mb-5 sm:mb-6">
+            <p className="mb-6 text-lg font-light leading-snug tracking-tight text-white/90 sm:text-xl lg:text-2xl">
               Empowering American enterprises with next-generation digital technology.
             </p>
 
-            {/* Supporting Body Text — font-normal text-white/70 */}
-            <p className="text-sm sm:text-base lg:text-lg font-normal text-white/70 leading-relaxed mb-8 sm:mb-10">
-              Headquartered in the United States, our team combines world-class engineering,
-              strategic thinking, and modern digital architecture to solve mission-critical
-              challenges. From nationwide infrastructure deployment to scalable cloud applications,
-              we deliver resilient solutions that fuel business growth coast-to-coast.
+            <p className="mb-8 text-sm font-normal leading-relaxed text-white/70 sm:text-base lg:text-lg">
+              Headquartered in the United States, our team combines world-class
+              engineering, strategic thinking, and modern digital architecture
+              to solve mission-critical challenges. From nationwide infrastructure
+              deployment to scalable cloud applications, we deliver resilient
+              solutions that fuel business growth coast-to-coast.
             </p>
 
-            {/* Hero-matched CTA Button */}
             <div className="mb-10 sm:mb-12">
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2.5 bg-[#0d9488] hover:bg-[#0f766e] text-white px-7 py-3 rounded-full text-xs sm:text-sm font-medium tracking-wide shadow-lg shadow-teal-950/40 transition-all duration-300 hover:shadow-xl hover:translate-x-1 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-offset-2 focus:ring-offset-black"
+                className="group inline-flex items-center gap-2.5 rounded-full bg-[#0d9488] px-7 py-3 text-xs font-medium tracking-wide text-white shadow-lg shadow-teal-950/40 transition-all duration-300 hover:translate-x-1 hover:bg-[#0f766e] hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-offset-2 focus:ring-offset-black sm:text-sm"
               >
                 <span>Discover Our Story</span>
-                <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
               </Link>
             </div>
 
-            {/* Horizontal Statistics */}
-            <div className="pt-8 border-t border-white/10">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-4 lg:gap-6 items-center">
-                {stats.map((stat, idx) => (
+            <div className="border-t border-white/10 pt-8">
+              <div className="grid grid-cols-1 items-center gap-6 sm:grid-cols-3 sm:gap-4 lg:gap-6">
+                {stats.map((stat, index) => (
                   <div key={stat.label} className="flex items-center">
-                    <div className="flex-1">
-                      <div className="text-3xl sm:text-4xl lg:text-[40px] font-light text-cyan-400 tracking-tight leading-none mb-2">
+                    <div className="min-w-0 flex-1">
+                      <div className="mb-2 text-3xl font-light leading-none tracking-tight text-cyan-400 sm:text-4xl lg:text-[40px]">
                         {stat.value}
                       </div>
-                      <div className="text-xs sm:text-sm font-normal text-white/70 leading-snug">
+                      <div className="text-xs font-normal leading-snug text-white/70 sm:text-sm">
                         {stat.label}
                       </div>
                     </div>
 
-                    {/* Thin vertical divider between items */}
-                    {idx < stats.length - 1 && (
+                    {index < stats.length - 1 && (
                       <div
-                        className="hidden sm:block h-12 w-[1px] bg-white/15 mx-3 lg:mx-4 shrink-0"
                         aria-hidden="true"
+                        className="mx-3 hidden h-12 w-px shrink-0 bg-white/15 sm:block lg:mx-4"
                       />
                     )}
                   </div>
@@ -105,235 +195,170 @@ export default function AboutUs() {
             </div>
           </div>
 
-          {/* RIGHT COLUMN (7 cols on xl, 6 cols on lg): United States Map & Technology Network */}
+          {/* RIGHT SIDE — POLITICAL-STYLE US MAP */}
           <div className="min-w-0 w-full">
-            <div className="relative w-full overflow-hidden p-0">
+            <div className="relative w-full overflow-hidden">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:30px_30px]"
+              />
 
+              <svg
+                viewBox="0 0 960 590"
+                className="relative z-10 h-auto w-full select-none"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                aria-label="United States state map and technology hubs"
+              >
+                <defs>
+                  <linearGradient id="landGradient" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stopColor="#0d9488" stopOpacity=".24" />
+                    <stop offset="55%" stopColor="#0369a1" stopOpacity=".18" />
+                    <stop offset="100%" stopColor="#082f49" stopOpacity=".3" />
+                  </linearGradient>
 
+                  <filter id="hubGlow">
+                    <feGaussianBlur stdDeviation="4" result="blur" />
+                    <feMerge>
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                </defs>
 
-              {/* High-Tech USA Vector Map Graphic */}
-              <div className="relative w-full aspect-[960/590] my-2">
-                <svg
-                  viewBox="0 0 960 590"
-                  className="w-full h-full select-none"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+                {/* State-shaped polygons, with state boundaries */}
+                <g
+                  fill="url(#landGradient)"
+                  stroke="#22d3ee"
+                  strokeOpacity=".75"
+                  strokeWidth="1.1"
+                  strokeLinejoin="round"
                 >
-                  <defs>
-                    {/* Tech Background Grid Pattern */}
-                    <pattern id="usTechGrid" width="30" height="30" patternUnits="userSpaceOnUse">
-                      <path
-                        d="M 30 0 L 0 0 0 30"
-                        fill="none"
-                        stroke="rgba(255, 255, 255, 0.03)"
-                        strokeWidth="0.8"
-                      />
-                    </pattern>
+                  {states.map((state) => (
+                    <path key={state.id} d={state.d} />
+                  ))}
+                </g>
 
-                    {/* Subtle Landmass Fill Gradient */}
-                    <linearGradient id="usLandGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#0d9488" stopOpacity="0.14" />
-                      <stop offset="50%" stopColor="#06b6d4" stopOpacity="0.08" />
-                      <stop offset="100%" stopColor="#0284c7" stopOpacity="0.03" />
-                    </linearGradient>
+                {/* State abbreviations */}
+                <g
+                  fill="#38bdf8"
+                  fontSize="12"
+                  fontFamily="Arial, sans-serif"
+                  textAnchor="middle"
+                >
+                  {stateLabels.map((state) => (
+                    <text key={state.name} x={state.x} y={state.y}>
+                      {state.name}
+                    </text>
+                  ))}
+                </g>
 
-                    {/* Network Connection Line Glow Gradient */}
-                    <linearGradient id="usLineGlow" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.3" />
-                      <stop offset="50%" stopColor="#22d3ee" stopOpacity="0.9" />
-                      <stop offset="100%" stopColor="#22d3ee" stopOpacity="0.3" />
-                    </linearGradient>
-                  </defs>
+                {/* Animated network connections */}
+                <g
+                  fill="none"
+                  stroke="#22d3ee"
+                  strokeWidth="1.6"
+                  strokeDasharray="5 7"
+                  className="network-arcs"
+                >
+                  {connections.map(([from, to]) => {
+                    const a = hubMap[from];
+                    const b = hubMap[to];
 
-                  {/* Ambient Tech Grid */}
-                  <rect width="960" height="590" fill="url(#usTechGrid)" />
-
-                  {/* ─── Continental United States Silhouette ─── */}
-                  <path
-                    d="M 115,75
-                       C 135,76 175,78 220,79
-                       L 310,81 L 415,84 L 490,86
-                       C 502,86 508,74 518,70
-                       C 525,72 529,81 538,87
-                       L 555,89
-                       C 568,98 578,94 595,94
-                       C 615,89 628,103 642,112
-                       C 656,108 670,117 685,126
-                       C 705,131 720,126 735,136
-                       C 745,126 760,116 780,121
-                       C 800,116 814,102 828,88
-                       C 842,78 862,73 872,83
-                       C 878,92 873,112 863,126
-                       C 854,141 844,155 839,170
-                       C 847,175 857,180 851,187
-                       C 844,190 834,185 829,183
-                       C 824,190 819,200 814,210
-                       C 807,215 814,223 824,223
-                       C 819,230 804,230 799,235
-                       C 794,245 789,265 784,280
-                       C 794,295 804,315 804,330
-                       C 799,340 784,350 774,360
-                       C 764,375 754,400 749,420
-                       C 754,435 764,455 774,485
-                       C 781,510 784,535 774,550
-                       C 764,560 749,545 744,525
-                       C 739,495 734,465 729,445
-                       C 714,445 694,450 674,445
-                       C 659,445 644,455 634,465
-                       C 624,475 619,495 609,500
-                       C 599,500 589,480 574,475
-                       C 554,470 534,475 519,490
-                       C 504,510 489,535 474,560
-                       C 464,560 454,540 444,525
-                       C 434,510 409,500 389,490
-                       C 374,483 359,490 349,475
-                       C 339,460 324,450 304,435
-                       L 229,433
-                       C 209,430 189,430 164,430
-                       C 139,430 119,415 104,390
-                       C 101,380 94,370 89,360
-                       C 81,340 84,315 77,295
-                       C 69,275 64,255 64,235
-                       C 59,210 61,190 67,170
-                       C 71,145 74,125 77,105
-                       C 81,90 87,80 94,77
-                       Z"
-                    fill="url(#usLandGradient)"
-
-                  />
-
-                  {/* Internal Regional Technology Grid Lines (US State Divisions) */}
-                  <g stroke="#ffffff" strokeWidth="0.8" strokeOpacity="0.1" strokeDasharray="3 6">
-                    {/* West Coast / Pacific boundaries */}
-                    <line x1="77" y1="120" x2="200" y2="120" />
-                    <line x1="67" y1="175" x2="210" y2="175" />
-                    <line x1="210" y1="175" x2="140" y2="370" />
-                    {/* Mountain region lines */}
-                    <line x1="200" y1="80" x2="200" y2="240" />
-                    <line x1="200" y1="240" x2="310" y2="240" />
-                    <line x1="310" y1="81" x2="310" y2="340" />
-                    <line x1="310" y1="340" x2="440" y2="340" />
-                    <line x1="440" y1="85" x2="440" y2="340" />
-                    {/* Texas boundary box */}
-                    <line x1="350" y1="370" x2="490" y2="370" />
-                    <line x1="490" y1="370" x2="490" y2="440" />
-                    {/* Midwest & Great Lakes boundaries */}
-                    <line x1="555" y1="90" x2="555" y2="340" />
-                    <line x1="555" y1="250" x2="680" y2="250" />
-                    <line x1="680" y1="126" x2="680" y2="380" />
-                    {/* East Coast / Southern boundaries */}
-                    <line x1="680" y1="320" x2="800" y2="320" />
-                    <line x1="680" y1="390" x2="760" y2="390" />
-                    <line x1="740" y1="180" x2="840" y2="180" />
-                  </g>
-
-                  {/* ─── Glowing Inter-Hub Network Arcs ─── */}
-                  <g stroke="url(#usLineGlow)" strokeWidth="1.5" strokeDasharray="4 6" className="network-arcs">
-                    {/* SF to Seattle */}
-                    <path d="M 86 275 Q 98 180 132 98" />
-                    {/* SF to Denver */}
-                    <path d="M 86 275 Q 210 240 342 260" />
-                    {/* SF to Austin */}
-                    <path d="M 86 275 Q 270 410 480 465" />
-                    {/* Seattle to Chicago */}
-                    <path d="M 132 98 Q 360 120 585 215" />
-                    {/* Denver to Chicago */}
-                    <path d="M 342 260 Q 460 210 585 215" />
-                    {/* Denver to Austin */}
-                    <path d="M 342 260 Q 410 370 480 465" />
-                    {/* Austin to Chicago */}
-                    <path d="M 480 465 Q 540 330 585 215" />
-                    {/* Austin to Atlanta */}
-                    <path d="M 480 465 Q 590 440 692 388" />
-                    {/* Chicago to New York */}
-                    <path d="M 585 215 Q 700 180 808 200" />
-                    {/* Atlanta to New York */}
-                    <path d="M 692 388 Q 770 290 808 200" />
-                    {/* New York to Boston */}
-                    <path d="M 808 200 Q 825 180 842 165" />
-                  </g>
-
-                  {/* ─── Hub Nodes with Pulsing Radar Rings ─── */}
-                  {usHubs.map((hub) => {
-                    const isSelected = selectedHub.id === hub.id;
                     return (
-                      <g
-                        key={hub.id}
-                        className="cursor-pointer group/hub transition-all"
-                        onClick={() => setSelectedHub(hub)}
-                        onMouseEnter={() => setSelectedHub(hub)}
-                      >
-                        {/* Animated Radar Pulse ring for active hubs */}
-                        {(hub.ping || isSelected) && (
-                          <circle
-                            cx={hub.x}
-                            cy={hub.y}
-                            r={isSelected ? "18" : "12"}
-                            fill="#22d3ee"
-                            fillOpacity={isSelected ? "0.35" : "0.2"}
-                            className="animate-ping"
-                          />
-                        )}
-
-                        {/* Outer Glow Halo */}
-                        <circle
-                          cx={hub.x}
-                          cy={hub.y}
-                          r={isSelected ? "9" : "6"}
-                          fill="#0d9488"
-                          fillOpacity="0.8"
-                          stroke={isSelected ? "#22d3ee" : "#ffffff"}
-                          strokeWidth={isSelected ? "2" : "1"}
-                          className="transition-all duration-300"
-                        />
-
-                        {/* Center White Core */}
-                        <circle
-                          cx={hub.x}
-                          cy={hub.y}
-                          r={isSelected ? "4" : "2.5"}
-                          fill={isSelected ? "#22d3ee" : "#ffffff"}
-                        />
-
-                        {/* Hub Text Label */}
-                        <text
-                          x={hub.x + (hub.x > 750 ? -12 : 12)}
-                          y={hub.y + 4}
-                          textAnchor={hub.x > 750 ? "end" : "start"}
-                          className={`text-[11px] font-sans transition-all duration-300 ${isSelected
-                            ? "fill-cyan-400 font-semibold"
-                            : "fill-white/70 font-light group-hover/hub:fill-white"
-                            }`}
-                        >
-                          {hub.name.split(",")[0]}
-                        </text>
-                      </g>
+                      <path
+                        key={`${from}-${to}`}
+                        d={`M ${a.x} ${a.y} Q ${(a.x + b.x) / 2} ${Math.min(a.y, b.y) - 35
+                          } ${b.x} ${b.y}`}
+                      />
                     );
                   })}
-                </svg>
-              </div>
+                </g>
 
-              {/* Card Footer: Selected Hub Quick Info & Key Metrics */}
+                {/* Clickable city hubs */}
+                {usHubs.map((hub) => {
+                  const active = selectedHub.id === hub.id;
 
+                  return (
+                    <g
+                      key={hub.id}
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`${hub.name}: ${hub.role}`}
+                      onClick={() => setSelectedHub(hub)}
+                      onMouseEnter={() => setSelectedHub(hub)}
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter" || event.key === " ") {
+                          event.preventDefault();
+                          setSelectedHub(hub);
+                        }
+                      }}
+                      className="cursor-pointer outline-none"
+                    >
+                      {active && (
+                        <circle
+                          cx={hub.x}
+                          cy={hub.y}
+                          r="15"
+                          fill="#22d3ee"
+                          fillOpacity=".25"
+                          className="animate-ping"
+                        />
+                      )}
 
+                      <circle
+                        cx={hub.x}
+                        cy={hub.y}
+                        r={active ? "8" : "6"}
+                        fill="#0d9488"
+                        fillOpacity=".95"
+                        stroke="#67e8f9"
+                        strokeWidth={active ? "2" : "1"}
+                        filter="url(#hubGlow)"
+                      />
+
+                      <circle
+                        cx={hub.x}
+                        cy={hub.y}
+                        r="2.5"
+                        fill="#ffffff"
+                      />
+
+                      <text
+                        x={hub.x + (hub.x > 750 ? -12 : 12)}
+                        y={hub.y - 11}
+                        textAnchor={hub.x > 750 ? "end" : "start"}
+                        fill={active ? "#67e8f9" : "#ffffff"}
+                        fontSize="12"
+                        fontWeight={active ? "600" : "400"}
+                      >
+                        {hub.name}
+                      </text>
+                    </g>
+                  );
+                })}
+              </svg>
             </div>
           </div>
-
         </div>
       </div>
 
-      {/* Network Animation Style */}
       <style>{`
         @keyframes networkFlow {
-          from {
-            stroke-dashoffset: 40;
-          }
-          to {
-            stroke-dashoffset: 0;
-          }
+          from { stroke-dashoffset: 48; }
+          to { stroke-dashoffset: 0; }
         }
+
         .network-arcs {
-          animation: networkFlow 2.5s linear infinite;
+          animation: networkFlow 3s linear infinite;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .network-arcs,
+          .animate-ping,
+          .animate-pulse {
+            animation: none !important;
+          }
         }
       `}</style>
     </section>

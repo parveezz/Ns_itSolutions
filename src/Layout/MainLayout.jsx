@@ -2,6 +2,7 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../shared/NavBar";
 import Footer from "../shared/Footer";
+import WhatsAppButton from "../shared/WhatsAppButton";
 
 export default function MainLayout() {
   return (
@@ -18,6 +19,9 @@ export default function MainLayout() {
 
       {/* Footer */}
       <Footer />
+
+      {/* Floating WhatsApp Contact Button */}
+      <WhatsAppButton />
     </div>
   );
 }

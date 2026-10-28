@@ -9,7 +9,7 @@ import {
   Leaf,
   ArrowLeft,
   ArrowRight,
-  ArrowUpRight,
+
 } from "lucide-react";
 
 const coreValues = [
@@ -78,7 +78,7 @@ export default function CoreValues() {
     <section
       id="core-values"
       aria-labelledby="core-values-heading"
-      className="relative isolate w-full overflow-hidden bg-black py-10 text-white sm:py-14 lg:py-16"
+      className="relative isolate w-full overflow-hidden bg-black py-10 text-white sm:py-14 lg:py-16 font-jakarta"
     >
       {/* Directional content animations */}
       <style>{`
