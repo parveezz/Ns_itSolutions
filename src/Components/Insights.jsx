@@ -67,9 +67,8 @@ function InsightCard({ insight, featured = false }) {
 
     return (
         <article
-            className={`group relative flex h-full flex-col overflow-hidden rounded-[20px] border border-white/10 bg-white/[0.03] backdrop-blur-sm p-6 transition-all duration-300 hover:-translate-y-1 hover:border-white/25 sm:p-8 ${
-                featured ? "lg:p-10" : ""
-            }`}
+            className={`group relative flex h-full flex-col overflow-hidden rounded-[20px] border border-white/10 bg-white/[0.03] backdrop-blur-sm p-6 transition-all duration-300 hover:-translate-y-1 hover:border-white/25 sm:p-8 ${featured ? "lg:p-10" : ""
+                }`}
         >
             <div className="relative flex items-center justify-between gap-3">
                 <span className="rounded-full border border-white/15 bg-white/[0.04] px-3 py-1.5 text-xs font-medium tracking-wide text-cyan-400">
@@ -94,11 +93,10 @@ function InsightCard({ insight, featured = false }) {
                 </div>
 
                 <h3
-                    className={`font-light leading-snug tracking-tight text-white transition-colors ${
-                        featured
-                            ? "text-2xl sm:text-3xl lg:text-4xl"
-                            : "text-xl sm:text-2xl"
-                    }`}
+                    className={`font-light leading-snug tracking-tight text-white transition-colors ${featured
+                        ? "text-2xl sm:text-3xl lg:text-4xl"
+                        : "text-xl sm:text-2xl"
+                        }`}
                 >
                     {insight.title}
                 </h3>
@@ -196,11 +194,10 @@ export default function Insights() {
                                 type="button"
                                 onClick={() => setActiveCategory(category)}
                                 aria-pressed={activeCategory === category}
-                                className={`shrink-0 rounded-full border px-4 py-2 text-xs sm:text-sm font-medium tracking-wide transition-colors duration-200 cursor-pointer ${
-                                    activeCategory === category
-                                        ? "border-cyan-400/50 bg-cyan-400/10 text-cyan-300"
-                                        : "border-white/10 bg-white/[0.02] text-white/60 hover:border-white/25 hover:text-white"
-                                }`}
+                                className={`shrink-0 rounded-full border px-4 py-2 text-xs sm:text-sm font-medium tracking-wide transition-colors duration-200 cursor-pointer ${activeCategory === category
+                                    ? "border-cyan-400/50 bg-cyan-400/10 text-cyan-300"
+                                    : "border-white/10 bg-white/[0.02] text-white/60 hover:border-white/25 hover:text-white"
+                                    }`}
                             >
                                 {category}
                             </button>
@@ -234,28 +231,6 @@ export default function Insights() {
                             </button>
                         </div>
                     )}
-                </section>
-
-                {/* Bottom CTA */}
-                <section className="mt-20 border-t border-white/10 pt-10 sm:mt-24 sm:pt-14">
-                    <p className="text-xs font-medium uppercase tracking-[0.25em] text-cyan-400">
-                        Keep Exploring
-                    </p>
-
-                    <div className="mt-4 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
-                        <h2 className="max-w-2xl text-3xl sm:text-4xl lg:text-[42px] font-light leading-[1.15] tracking-tight text-white">
-                            Good ideas create
-                            <br className="hidden sm:block" /> better possibilities.
-                        </h2>
-
-                        <a
-                            href="#contact"
-                            className="inline-flex w-fit items-center gap-2.5 bg-[#0d9488] hover:bg-[#0f766e] text-white px-7 py-3 rounded-full text-xs sm:text-sm font-medium tracking-wide shadow-lg shadow-teal-950/40 transition-all duration-300 hover:shadow-xl hover:translate-x-1 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-offset-2 focus:ring-offset-black"
-                        >
-                            <span>Let's Connect</span>
-                            <ArrowRight size={15} />
-                        </a>
-                    </div>
                 </section>
             </div>
         </main>

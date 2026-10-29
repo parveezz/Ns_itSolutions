@@ -1,26 +1,18 @@
-
 import { Routes, Route } from "react-router-dom";
 
 import MainLayout from "../Layout/MainLayout";
 import Home from "../pages/home/Home";
 import About from "../pages/About/About";
 import Contact from "../pages/contact/Contact";
-import Industries from "../Components/Industries";
 import Insights from "../Components/Insights";
+import Industry from "../pages/Industry/Industry";
 
 export default function AppRoutes() {
   return (
     <Routes>
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
-        <Route
-          path="/industries"
-          element={
-            <div className="pt-20 sm:pt-24 lg:pt-28">
-              <Industries />
-            </div>
-          }
-        />
+        <Route path="/industries" element={<Industry />} />
         <Route path="/about" element={<About />} />
         <Route
           path="/insights"
