@@ -2,7 +2,7 @@ import IndustryHero from "./IndustryHero";
 import IndustriesWeServe from "./IndustriesWeServe";
 import IndustryShowcase from "./IndustryShowcase";
 import OurCustomers from "./OurCustomers";
-import Insights from "../../Components/Insights";
+import Insights from "../Insights/Insights";
 import ContactCTA from "../../Components/ContactCTA";
 
 const Industry = () => {

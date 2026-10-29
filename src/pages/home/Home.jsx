@@ -1,14 +1,14 @@
-import Hero from "../../Components/Hero";
+import HomeHero from "./HomeHero";
 import AboutUs from "../About/AboutUs";
 import Industries from "../../Components/Industries";
-import Insights from "../../Components/Insights";
+import Insights from "../Insights/Insights";
 import Contact from "../contact/Contact";
 
 export default function Home() {
   return (
-    <>
-      {/* Full-Screen Hero Section with 2-Image Slider */}
-      <Hero />
+    <div className="bg-black text-white">
+      {/* First Hero Component (Invertio Digital Engineering & ZeroQueries AI Slider) */}
+      <HomeHero />
 
       {/* Corporate Technology About Us Section */}
       <AboutUs />
@@ -21,6 +21,6 @@ export default function Home() {
 
       {/* Contact Section */}
       <Contact />
-    </>
+    </div>
   );
 }

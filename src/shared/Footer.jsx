@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import {
     ArrowRight,
     Mail,
@@ -16,10 +17,10 @@ import Input from "./Input";
 
 const footerLinks = {
     Explore: [
-        { label: "Home", href: "#home" },
-        { label: "About Us", href: "#about" },
-        { label: "Industries", href: "#industries" },
-        { label: "Insights", href: "#insights" },
+        { label: "Home", href: "/" },
+        { label: "About Us", href: "/about" },
+        { label: "Industries", href: "/industries" },
+        { label: "Insights", href: "/insights" },
     ],
     Services: [
         { label: "Web Development", href: "#web-development" },
@@ -28,9 +29,9 @@ const footerLinks = {
         { label: "IT Consulting", href: "#it-consulting" },
     ],
     Company: [
-        { label: "Our Story", href: "#about" },
-        { label: "Careers", href: "#careers" },
-        { label: "Contact Us", href: "#contact" },
+        { label: "Our Story", href: "/about" },
+        { label: "Careers", href: "/contact" },
+        { label: "Contact Us", href: "/contact" },
         { label: "Privacy Policy", href: "#privacy" },
     ],
 };
@@ -172,12 +173,12 @@ export default function Footer() {
                                 <ul className="space-y-3.5">
                                     {links.map((link) => (
                                         <li key={link.label}>
-                                            <a
-                                                href={link.href}
+                                            <Link
+                                                to={link.href}
                                                 className="inline-flex items-center gap-1 text-sm font-light text-white/60 transition-colors hover:text-white"
                                             >
                                                 {link.label}
-                                            </a>
+                                            </Link>
                                         </li>
                                     ))}
                                 </ul>
